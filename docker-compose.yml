@@ -20,7 +20,7 @@ services:
       start_period: 30s
 
   app:
-    image: comments-response-automation:latest
+    image: krzpob/comments-response-automation:latest
     platform: linux/amd64
     restart: unless-stopped
     ports:

@@ -4,3 +4,4 @@ build/
 *.jar
 .idea/
 *.iml
+nginx/certs/

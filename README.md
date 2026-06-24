@@ -23,7 +23,7 @@ adapter/outbound/meta        ← Meta Graph API (DM + komentarze)
 cp .env.example .env
 # edytuj .env i uzupełnij tokeny
 
-docker build -t comments-response-automation:latest .
+docker build --platform linux/amd64 -t comments-response-automation:latest .
 ```
 
 ## Wdrożenie na Synology DS918+
