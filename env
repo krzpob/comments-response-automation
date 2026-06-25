@@ -1,0 +1,22 @@
+# Skopiuj ten plik jako .env i uzupelnij wartosci
+
+# Baza danych
+DB_NAME=comments_automation
+DB_USER=app
+DB_PASSWORD=ZMIEN_MNIE
+MYSQL_ROOT_PASSWORD=ZMIEN_MNIE_ROOT
+
+# Meta (Facebook/Instagram) API
+META_PAGE_ACCESS_TOKEN=IGAAX8onIZAGmxBZAGJTMmNEQVFZAWE5Kb3pnaHJUVVpBblZA0c3AxWDZALX0xhcXZAMamwzQ0M1TGVPcEtoUmVOcWhlcVNCZAjk1b3g1THlDZA3A1VXduM204a1ZAJclJFWUpKSEVSVE16X245RE1hTWlDSnJzNTZAYSno0eDRya1dsMVVBYwZDZD
+META_WEBHOOK_VERIFY_TOKEN=vAa30QZ9DC1ve0OFWYd5m12mI8aokQq69dVKl4Owo3YgfrGvLC8iXqzVmxx1xBog
+META_API_VERSION=v19.0
+META_APP_ID=2205204396903903
+
+# Serwer
+SERVER_PORT=8443
+
+# SSL (true = HTTPS bezposrednio w aplikacji)
+SSL_ENABLED=true
+# Sciezka do folderu z certyfikatami na NAS-ie (cert.pem + key.pem)
+CERTS_DIR=/volume2/docker/comments-automation/certs
+
