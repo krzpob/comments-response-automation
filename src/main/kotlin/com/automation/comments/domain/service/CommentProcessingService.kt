@@ -3,6 +3,7 @@ package com.automation.comments.domain.service
 import com.automation.comments.domain.model.CommentEvent
 import com.automation.comments.domain.port.inbound.CommentWebhookUseCase
 import com.automation.comments.domain.port.inbound.IncomingComment
+import com.automation.comments.domain.port.inbound.IncomingPostback
 import com.automation.comments.domain.port.outbound.CommentEventRepository
 import com.automation.comments.domain.port.outbound.CommentReplyPort
 import com.automation.comments.domain.port.outbound.MessagingPort
@@ -39,7 +40,7 @@ class CommentProcessingService(
         log.info("Rule [{}] matched comment {}", matched.id, event.commentId)
 
         val dmMessage = matched.dmTemplate.replace("{keyword}", matched.keyword)
-        val dmSent = messagingPort.sendDirectMessage(event.senderId, dmMessage)
+        val dmSent = messagingPort.sendDirectMessage(event.senderId, dmMessage, matched.dmButton)
 
         val commentReplied = if (dmSent) {
             val replyMessage = matched.commentReplyTemplate.replace("{keyword}", matched.keyword)
@@ -59,5 +60,21 @@ class CommentProcessingService(
             dmSent = dmSent,
             commentReplied = commentReplied,
         ))
+    }
+
+    override fun handlePostback(event: IncomingPostback) {
+        val matched = ruleRepository.findEnabledByPageIdOrGlobal(event.pageId)
+            .firstOrNull { rule ->
+                rule.dmButton?.payload.equals(event.payload, ignoreCase = true)
+            }
+
+        if (matched == null) {
+            log.debug("No matching postback rule for payload {} on page {}", event.payload, event.pageId)
+            return
+        }
+
+        log.info("Rule [{}] matched postback payload {}", matched.id, event.payload)
+        val dmMessage = matched.dmTemplate.replace("{keyword}", event.payload)
+        messagingPort.sendDirectMessage(event.senderId, dmMessage, matched.dmButton)
     }
 }

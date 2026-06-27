@@ -23,8 +23,12 @@ data class MetaWebhookPayload(
         @JsonProperty("media") val media: Media?,
         @JsonProperty("message") val message: String?,
         @JsonProperty("parent_id") val parentId: String?,
+        @JsonProperty("sender") val sender: Sender?,
+        @JsonProperty("postback") val postback: Postback?,
     )
 
     data class From(val id: String, val name: String?)
+    data class Sender(val id: String)
     data class Media(val id: String)
+    data class Postback(val payload: String)
 }

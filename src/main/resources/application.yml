@@ -16,11 +16,15 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+    
 
 server:
   port: ${SERVER_PORT:8080}
 
 meta:
+  client-id: ${META_CLIENT_ID}
+  client-secret: ${META_CLIENT_SECRET}
+  redirect-url: ${META_REDIRECT_URL}
   page-access-token: ${META_PAGE_ACCESS_TOKEN}
   webhook-verify-token: ${META_WEBHOOK_VERIFY_TOKEN}
   api-version: ${META_API_VERSION:v19.0}

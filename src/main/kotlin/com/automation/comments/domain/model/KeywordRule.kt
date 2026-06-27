@@ -7,4 +7,5 @@ data class KeywordRule(
     val commentReplyTemplate: String,
     val pageId: String? = null,
     val enabled: Boolean = true,
+    val dmButton: MessageButton? = null,
 )

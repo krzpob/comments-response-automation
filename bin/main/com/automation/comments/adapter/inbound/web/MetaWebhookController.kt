@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import tools.jackson.module.kotlin.jacksonObjectMapper
 
 @RestController
 @RequestMapping("/webhook")
@@ -17,7 +16,7 @@ class MetaWebhookController(
     @Value("\${meta.webhook-verify-token}") private val verifyToken: String,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
-        private val objectMapper = jacksonObjectMapper()
+
     // Meta webhook verification (GET)
     @GetMapping
     fun verify(
@@ -35,9 +34,7 @@ class MetaWebhookController(
 
     // Meta webhook events (POST)
     @PostMapping
-    fun receive(@RequestBody payloadString: String): ResponseEntity<Void> {
-        log.info("Receiving webhook payload: $payloadString")
-        val payload = objectMapper.readValue(payloadString, MetaWebhookPayload::class.java)
+    fun receive(@RequestBody payload: MetaWebhookPayload): ResponseEntity<Void> {
         if (payload.`object` != "instagram" && payload.`object` != "page") {
             return ResponseEntity.ok().build()
         }

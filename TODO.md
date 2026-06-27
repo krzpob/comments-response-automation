@@ -2,7 +2,7 @@
 
 ## Funkcje główne
 
-- [ ] Obsługa Instagram Business Login (wymagane do wysyłki DM przez Instagram Messaging API)
+- [x] Obsługa Instagram Business Login (wymagane do wysyłki DM przez Instagram Messaging API)
 - [ ] Flow po dopasowaniu komentarza: wysyłka DM z przyciskiem (Button Template) + odpowiedź pod komentarzem że DM poszedł
 - [ ] Obsługa webhooka `messaging_postbacks` — reakcja na kliknięcie przycisku w wiadomości
 

@@ -19,18 +19,39 @@ services:
       retries: 5
       start_period: 30s
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    platform: linux/amd64
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: ${DB_USER:-app}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      PMA_ARBITRARY: 1
+    depends_on:
+      db:
+        condition: service_healthy
+
   app:
     image: krzpob/comments-response-automation:latest
     platform: linux/amd64
     restart: unless-stopped
     ports:
       - "${SERVER_PORT:-8080}:8080"
+    volumes:
+      - app_logs:/app/logs
     environment:
       DB_HOST: db
       DB_PORT: 3306
       DB_NAME: ${DB_NAME:-comments_automation}
       DB_USER: ${DB_USER:-app}
       DB_PASSWORD: ${DB_PASSWORD}
+      META_CLIENT_ID: ${META_CLIENT_ID}
+      META_CLIENT_SECRET: ${META_CLIENT_SECRET}
+      META_REDIRECT_URL: ${META_REDIRECT_URL}
       META_PAGE_ACCESS_TOKEN: ${META_PAGE_ACCESS_TOKEN}
       META_WEBHOOK_VERIFY_TOKEN: ${META_WEBHOOK_VERIFY_TOKEN}
       META_API_VERSION: ${META_API_VERSION:-v19.0}
@@ -40,3 +61,4 @@ services:
 
 volumes:
   db_data:
+  app_logs:

@@ -1,6 +1,7 @@
 package com.automation.comments.adapter.outbound.persistence.jpa.entity
 
 import com.automation.comments.domain.model.KeywordRule
+import com.automation.comments.domain.model.MessageButton
 import jakarta.persistence.*
 
 @Entity
@@ -23,15 +24,35 @@ class KeywordRuleEntity(
 
     @Column(nullable = false)
     var enabled: Boolean = true,
+
+    @Column(name = "dm_button_type")
+    var dmButtonType: String? = null,
+
+    @Column(name = "dm_button_title")
+    var dmButtonTitle: String? = null,
+
+    @Column(name = "dm_button_payload")
+    var dmButtonPayload: String? = null,
 ) {
-    fun toDomain() = KeywordRule(
-        id = id,
-        keyword = keyword,
-        dmTemplate = dmTemplate,
-        commentReplyTemplate = commentReplyTemplate,
-        pageId = pageId,
-        enabled = enabled,
-    )
+    fun toDomain(): KeywordRule {
+        val buttonType = dmButtonType
+        val buttonTitle = dmButtonTitle
+        val buttonPayload = dmButtonPayload
+
+        return KeywordRule(
+            id = id,
+            keyword = keyword,
+            dmTemplate = dmTemplate,
+            commentReplyTemplate = commentReplyTemplate,
+            pageId = pageId,
+            enabled = enabled,
+            dmButton = if (buttonType != null && buttonTitle != null && buttonPayload != null) {
+                MessageButton(buttonType, buttonTitle, buttonPayload)
+            } else {
+                null
+            },
+        )
+    }
 
     companion object {
         fun fromDomain(rule: KeywordRule) = KeywordRuleEntity(
@@ -41,6 +62,9 @@ class KeywordRuleEntity(
             commentReplyTemplate = rule.commentReplyTemplate,
             pageId = rule.pageId,
             enabled = rule.enabled,
+            dmButtonType = rule.dmButton?.type,
+            dmButtonTitle = rule.dmButton?.title,
+            dmButtonPayload = rule.dmButton?.payload,
         )
     }
 }
