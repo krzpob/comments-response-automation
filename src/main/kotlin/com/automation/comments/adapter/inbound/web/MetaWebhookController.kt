@@ -48,14 +48,14 @@ class MetaWebhookController(
                 when (change.field) {
                     "comments" -> {
                         val v = change.value
-                        if (v.commentId != null && v.from != null && v.message != null && v.media != null) {
+                        if (v.commentId != null && v.from != null && v.text != null && v.media != null) {
                             commentWebhookUseCase.handleComment(
                                 IncomingComment(
                                     commentId = v.commentId,
                                     senderId = v.from.id,
                                     pageId = entry.id,
                                     mediaId = v.media.id,
-                                    text = v.message,
+                                    text = v.text,
                                 )
                             )
                         }

@@ -54,7 +54,7 @@ services:
       META_REDIRECT_URL: ${META_REDIRECT_URL}
       META_PAGE_ACCESS_TOKEN: ${META_PAGE_ACCESS_TOKEN}
       META_WEBHOOK_VERIFY_TOKEN: ${META_WEBHOOK_VERIFY_TOKEN}
-      META_API_VERSION: ${META_API_VERSION:-v19.0}
+      META_API_VERSION: ${META_API_VERSION:-v25.0}
     depends_on:
       db:
         condition: service_healthy

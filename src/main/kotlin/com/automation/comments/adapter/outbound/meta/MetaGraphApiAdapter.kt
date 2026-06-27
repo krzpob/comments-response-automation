@@ -25,7 +25,7 @@ class MetaGraphApiAdapter(
     }
 
 
-    private val baseUrl = "https://graph.facebook.com"
+    private val baseUrl = "https://graph.instagram.com"
 
     private val client: RestClient = RestClient.builder()
         .baseUrl(baseUrl)
@@ -90,12 +90,12 @@ class MetaGraphApiAdapter(
 
     override fun enableSubscription(token: AccessToken) {
         try {
-            val url = "/${metaProperties.apiVersion}/me/subscribed_apps?subscribed_fields=$SUBSCRIBE_FIELD" +
-                    "&access_token=${metaProperties.appToken}"
+            val url = "$baseUrl/${metaProperties.apiVersion}/me/subscribed_apps?subscribed_fields=$SUBSCRIBE_FIELD" +
+                    "&access_token=${token.token}"
             log.info("Enabled subscription for $url")
             val response = client.post()
                 .uri("/${metaProperties.apiVersion}/me/subscribed_apps?subscribed_fields=$SUBSCRIBE_FIELD" +
-                        "&access_token=${metaProperties.appToken}")
+                        "&access_token=${token.token}")
             .retrieve()
                 .body<EnableSubscriptionResponseDTO>()
             if (response?.success==true) log.info("Subscription enabled")
